@@ -3,8 +3,8 @@
     --primary: #086b5b;
     --primary-dark: #055345;
     --zalo: #175cd3;
-    --ink: #202b28;
-    --muted: #606c68;
+    --ink: #17211e;
+    --muted: #48544f;
     --surface: #fff;
     --soft: #f5f7f6;
     --line: #dce4e0;
@@ -94,7 +94,7 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
 .feature-item i { color: var(--primary); }
 .location-item span, .feature-item span { min-width: 0; overflow-wrap: anywhere; }
 .hero-buttons { display: flex; flex-wrap: wrap; gap: 12px; }
-.hero-image img { width: 100%; height: auto; object-fit: contain; border-radius: 8px; box-shadow: 0 12px 32px rgba(32,43,40,.1); }
+.hero-image img { width: 100%; height: auto; object-fit: contain; border-radius: 12px; box-shadow: 0 12px 32px rgba(32,43,40,.1); }
 .brands, .lights, .contact { padding: 72px 0; }
 .brands h2, .lights h2, .contact h2 { margin-bottom: 32px; text-align: center; }
 .brands-grid { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 20px; }
@@ -107,12 +107,14 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
 .lights-note { margin-bottom: 32px; color: var(--muted); text-align: center; font-size: .85rem; }
 .lights-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 24px; }
 .light-card { display: flex; flex-direction: column; width: 100%; min-width: 0; padding: 0; overflow: hidden; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); color: var(--ink); text-align: left; cursor: pointer; transition: border-color .2s, box-shadow .2s; }
-.light-card > img { width: 100%; aspect-ratio: 4/3; object-fit: contain; background: #e9eeec; }
+.light-cover { position: relative; display: block; flex-shrink: 0; width: 100%; aspect-ratio: 4/3; background: #eef1ef; }
+.light-cover img, .light-photo-image img { width: auto; height: auto; max-width: 100%; max-height: 100%; border-radius: 8px; }
+.light-cover img { position: absolute; inset: 12px; margin: auto; max-width: calc(100% - 24px); max-height: calc(100% - 24px); }
 .light-card-body { display: flex; flex: 1; flex-direction: column; gap: 16px; padding: 24px; }
 .light-card-title { font-size: 1.2rem; font-weight: 600; line-height: 1.4; overflow-wrap: anywhere; }
 .light-card-description { color: var(--muted); font-size: .9rem; }
 .light-card-specs { display: flex; flex-wrap: wrap; gap: 8px; }
-.light-card-specs span { padding: 4px 8px; background: var(--soft); border: 1px solid var(--line); color: #45554f; border-radius: 4px; font-size: .75rem; }
+.light-card-specs span { padding: 4px 8px; background: var(--soft); border: 1px solid var(--line); color: var(--ink); border-radius: 4px; font-size: .75rem; }
 .light-card-bottom { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-top: auto; padding-top: 16px; border-top: 1px solid var(--line); font-size: .85rem; }
 .light-card-bottom strong { color: var(--primary); font-weight: 600; }
 .light-card-bottom > span { display: inline-flex; align-items: center; gap: 8px; color: var(--muted); }
@@ -137,15 +139,35 @@ body.light-gallery-open { overflow: hidden; }
 .light-dialog-heading h2 { margin: 0; font-size: 1.35rem; }
 .light-icon-button { display: inline-flex; flex: 0 0 44px; align-items: center; justify-content: center; width: 44px; height: 44px; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); color: var(--ink); cursor: pointer; }
 .light-icon-button:disabled { opacity: .35; cursor: default; }
-.light-photo-track { display: flex; width: 100%; overflow-x: auto; scroll-snap-type: x mandatory; overscroll-behavior-x: contain; background: var(--soft); }
+.light-photo-track { display: flex; width: 100%; overflow-x: auto; scrollbar-width: none; scroll-snap-type: x mandatory; overscroll-behavior-x: contain; background: var(--soft); }
+.light-photo-track::-webkit-scrollbar { display: none; }
 .light-photo { position: relative; flex: 0 0 100%; min-width: 0; scroll-snap-align: start; }
-.light-photo img { width: 100%; height: min(50dvh,480px); object-fit: contain; }
-.light-photo figcaption { padding: 8px 16px; color: var(--muted); text-align: center; font-size: .8rem; }
+.light-photo-image { display: flex; align-items: center; justify-content: center; width: 100%; height: min(50dvh,480px); padding: 12px; }
+.light-photo figcaption { min-height: 48px; padding: 12px 16px 16px; color: var(--muted); text-align: center; font-size: .8rem; line-height: 1.6; overflow-wrap: anywhere; }
 .light-gallery-controls { display: flex; align-items: center; justify-content: center; gap: 24px; padding: 12px 20px; }
 .light-gallery-controls > span { min-width: 54px; text-align: center; font-variant-numeric: tabular-nums; }
 .light-dialog-footer { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding: 0 20px 20px; }
 .light-dialog-footer p { color: var(--muted); font-size: .8rem; }
 .light-consult { min-height: 44px; background: var(--zalo); color: #fff; font-size: .9rem; }
+.light-guide { padding: 72px 0; border-bottom: 1px solid var(--line); }
+.light-guide > .container > h2 { margin-bottom: 32px; text-align: center; }
+.light-guide-layout { display: grid; grid-template-columns: minmax(0,.85fr) minmax(0,1.15fr); gap: 40px; align-items: start; }
+.light-guide-layout h3 { margin-bottom: 20px; font-size: 1.15rem; }
+.guide-apps { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 16px; }
+.guide-app { min-width: 0; padding: 20px 12px 12px; border: 1px solid var(--line); border-radius: 8px; text-align: center; }
+.guide-app h4 { display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 1rem; }
+.guide-app h4 i { font-size: 1.2rem; }
+.guide-app:first-child h4 i { color: var(--primary); }
+.guide-qr { display: block; width: min(100%,180px); margin: 16px auto 8px; }
+.guide-qr img { width: 100%; aspect-ratio: 1; height: auto; }
+.guide-store-link { display: flex; align-items: center; justify-content: center; min-height: 48px; margin-top: 12px; padding: 10px 12px; border: 1px solid var(--primary); border-radius: 6px; background: var(--primary); color: #fff; font-size: .85rem; font-weight: 600; line-height: 1.4; text-decoration: none; transition: background-color .2s, border-color .2s; }
+.guide-store-link:active { background: var(--primary-dark); border-color: var(--primary-dark); }
+.guide-video { min-width: 0; }
+.guide-video iframe { display: block; width: 100%; height: auto; aspect-ratio: 16/9; border: 0; border-radius: 8px; background: var(--soft); }
+.guide-video-footer { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px; margin-top: 12px; }
+.guide-video-footer p { color: var(--muted); font-size: .8rem; }
+.guide-video-footer a { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; font-size: .85rem; font-weight: 500; }
+.guide-video-footer a i { color: #b42318; }
 .contact-info { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 24px; }
 .contact-item { display: flex; align-items: flex-start; gap: 16px; padding: 24px 0; border-top: 1px solid var(--line); }
 .contact-icon { display: flex; flex: 0 0 44px; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 8px; background: #e8f3ef; color: var(--primary); font-size: 1.25rem; }
@@ -163,11 +185,12 @@ body.light-gallery-open { overflow: hidden; }
 .footer-section ul { list-style: none; }
 .footer-section li { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px; overflow-wrap: anywhere; }
 .footer-section li i { flex: 0 0 16px; width: 16px; margin-top: .35em; color: #91c7b5; text-align: center; }
-.footer-bottom { padding-top: 24px; border-top: 1px solid #3c4943; color: #a7b6ae; text-align: center; font-size: .75rem; }
+.footer-bottom { padding-top: 24px; border-top: 1px solid #3c4943; color: #c4cfca; text-align: center; font-size: .75rem; }
 .back-to-top { position: fixed; right: 24px; bottom: 24px; z-index: 1000; display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); color: var(--primary); box-shadow: 0 4px 16px rgba(32,43,40,.1); cursor: pointer; opacity: 0; visibility: hidden; transition: opacity .2s, visibility .2s; }
 .back-to-top.show { opacity: 1; visibility: visible; }
 .mobile-contact-bar { display: none; }
 @media (hover:hover) {
+    .guide-store-link:hover { background: var(--primary-dark); border-color: var(--primary-dark); }
     .phone-btn:hover, .btn-primary:hover { background: var(--primary-dark); }
     .btn-secondary:hover { background: #edf3fd; border-color: var(--zalo); }
     .light-consult:hover { background: #124ba9; }
@@ -181,6 +204,8 @@ body.light-gallery-open { overflow: hidden; }
 }
 .hero-text { animation: reveal .5s ease-out both; }
 @media (max-width:1024px) {
+    .light-guide-layout { grid-template-columns: minmax(0,1fr); gap: 32px; }
+    .guide-apps { max-width: 520px; }
     .hero-content { grid-template-columns: minmax(0,1fr); gap: 36px; }
     .hero-text { max-width: 760px; }
     .hero-image { width: 100%; max-width: 760px; }
@@ -206,6 +231,11 @@ body.light-gallery-open { overflow: hidden; }
     .hero-buttons { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); }
     .btn { padding: 12px; font-size: .9rem; }
     .brands, .lights, .contact { padding: 48px 0; }
+    .light-guide { padding: 48px 0; }
+    .light-guide > .container > h2 { margin-bottom: 24px; }
+    .guide-apps { gap: 12px; }
+    .guide-app { padding: 16px 8px 8px; }
+    .guide-store-link { font-size: .8rem; }
     h2 { font-size: 1.6rem; }
     .brands h2, .contact h2 { margin-bottom: 24px; }
     .brands-grid { gap: 12px; }
@@ -214,12 +244,11 @@ body.light-gallery-open { overflow: hidden; }
     .brand-item h3 { font-size: 1rem; }
     .brand-item p { font-size: .8rem; }
     .lights-grid { grid-template-columns: minmax(0,1fr); gap: 20px; }
-    .light-card > img { aspect-ratio: 16/9; }
     .light-card-body { padding: 20px; }
     .light-dialog { width: calc(100% - 24px); max-height: calc(100dvh - 24px); }
     .light-dialog-heading { padding: 12px; }
     .light-dialog-heading h2 { font-size: 1.1rem; }
-    .light-photo img { height: min(45dvh,360px); }
+    .light-photo-image { height: min(45dvh,360px); }
     .light-dialog-footer { padding: 0 12px 16px; }
     .light-consult { width: 100%; }
     .contact-item { gap: 14px; padding-block: 20px; }

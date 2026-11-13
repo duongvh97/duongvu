@@ -22,32 +22,45 @@ if (backToTopButton) {
 const currentYear = document.getElementById('currentYear');
 if (currentYear) currentYear.textContent = new Date().getFullYear();
 
-const demoLightPhotos = [
-  'https://images.unsplash.com/photo-1520301255226-bf5f144451c1?auto=format&fit=max&w=1200&q=80',
-  'https://images.unsplash.com/photo-1522069169874-c58ec4b76be5?auto=format&fit=max&w=1200&q=80',
-  'https://images.unsplash.com/photo-1534043464124-3be32fe000c9?auto=format&fit=max&w=1200&q=80',
-  'https://images.unsplash.com/photo-1535591273668-578e31182c4f?auto=format&fit=max&w=1200&q=80',
-  'https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=max&w=1200&q=80'
-];
-
 const lightProducts = [
   {
     name: 'RGBW 80W',
-    description: 'Đèn thanh RGBW cho bể thủy sinh, ánh sáng cân bằng cho cây và cá.',
-    specs: ['80W', 'Bể 60–90 cm', '4 kênh màu', 'Bluetooth', 'BH 12 tháng'],
-    images: [...demoLightPhotos]
+    description: 'LED COB RGBW-UV chất lượng cao, ánh sáng trung thực, tôn màu cây cá. Hợp hồ Biotop, đá suối, cá dĩa và Blue Mahseer.',
+    specs: ['80W', 'Hồ 60–80 cm', '4 kênh R/G/B/W độc lập', 'BLE/WiFi', 'BH 6 tháng'],
+    images: [
+      'img/rgbw80w/rgbw80w_1.jpg',
+      'img/rgbw80w/rgbw80w_2.jpg',
+      'img/rgbw80w/rgbw80w_3.jpg',
+      'img/rgbw80w/rgbw80w_4.jpg',
+      'img/rgbw80w/rgbw80w_5.jpg',
+      'img/rgbw80w/rgbw80w_6.jpg'
+    ]
   },
   {
     name: 'UFO RGBW 80W',
-    description: 'Thiết kế đèn treo gọn gàng, ánh sáng tập trung cho bể mở và bố cục đá.',
-    specs: ['80W', 'Bể 45–60 cm', 'LED RGBW', 'Dimmer', 'BH 12 tháng'],
-    images: [...demoLightPhotos.slice(1), demoLightPhotos[0]]
+    description: 'LED COB RGBW-UV chất lượng cao, ánh sáng trung thực, tôn màu cây cá. Hợp hồ Biotop, đá suối, cá dĩa và Blue Mahseer.',
+    specs: ['80W', 'Hồ 60–80 cm', '4 kênh R/G/B/W độc lập', 'LED viền: màu & hiệu ứng', 'BLE/WiFi', 'BH 6 tháng'],
+    images: [
+      'img/ufo_rgbw80w/ufo_rgbw80_1.jpg',
+      'img/ufo_rgbw80w/ufo_rgbw80_2.jpg',
+      'img/ufo_rgbw80w/ufo_rgbw80_3.jpg',
+      'img/ufo_rgbw80w/ufo_rgbw80_4.jpg',
+      'img/ufo_rgbw80w/ufo_rgbw80_5.jpg',
+      'img/ufo_rgbw80w/ufo_rgbw80_6.jpg'
+    ]
   },
   {
     name: 'Supper Color 100W',
-    description: 'Công suất mạnh mẽ, dải màu nổi bật cho bể cây cắt cắm và cây màu.',
-    specs: ['100W', 'Bể 90–120 cm', 'RGB toàn phổ', 'Hẹn giờ', 'BH 12 tháng'],
-    images: [...demoLightPhotos.slice(2), ...demoLightPhotos.slice(0, 2)]
+    description: 'LED COB RGB 100W rọi sâu, tôn màu rực rỡ cho Ranchu, Phi Tần và cá chép.',
+    specs: ['100W', 'Hồ 60–90 cm', 'Dimmer 6 mức', 'Không chỉnh màu', 'Hẹn giờ bật: 3/6/12h', 'BH 6 tháng'],
+    images: [
+      'img/100w/100w_1.jpg',
+      'img/100w/100w_2.jpg',
+      'img/100w/100w_3.jpg',
+      'img/100w/100w_4.jpg',
+      'img/100w/100w_5.jpg',
+      'img/100w/100w_6.jpg'
+    ]
   }
 ];
 
@@ -69,19 +82,21 @@ if (lightsGrid && lightDialog) {
     nextPhoto.disabled = index === activeProduct.images.length - 1;
   };
 
-  lightProducts.forEach((product) => {
+  lightProducts.forEach((product, productIndex) => {
+    const productId = `light-product-${productIndex}`;
     const card = document.createElement('button');
     card.type = 'button';
     card.className = 'light-card';
     card.setAttribute('aria-haspopup', 'dialog');
-    card.setAttribute('aria-label', `Xem ảnh ${product.name}`);
+    card.setAttribute('aria-labelledby', `${productId}-title`);
+    card.setAttribute('aria-describedby', `${productId}-description ${productId}-specs ${productId}-price`);
     card.innerHTML = `
-      <img src="${product.images[0]}" alt="Ảnh minh họa bể cá cho ${product.name}" loading="lazy" decoding="async" width="800" height="600">
+      <span class="light-cover"><img src="${product.images[0]}" alt="Đèn ${product.name}" loading="lazy" decoding="async" width="800" height="600"></span>
       <span class="light-card-body">
-        <span class="light-card-title">${product.name}</span>
-        <span class="light-card-description">${product.description}</span>
-        <span class="light-card-specs">${product.specs.map((spec) => `<span>${spec}</span>`).join('')}</span>
-        <span class="light-card-bottom"><strong>Giá: Liên hệ</strong><span><i class="fas fa-images" aria-hidden="true"></i> ${product.images.length} ảnh</span></span>
+        <span class="light-card-title" id="${productId}-title">${product.name}</span>
+        <span class="light-card-description" id="${productId}-description">${product.description}</span>
+        <span class="light-card-specs" id="${productId}-specs">${product.specs.map((spec) => `<span>${spec}</span>`).join(' ')}</span>
+        <span class="light-card-bottom"><strong id="${productId}-price">Giá: Liên hệ</strong><span><i class="fas fa-images" aria-hidden="true"></i> ${product.images.length} ảnh</span></span>
       </span>`;
     card.addEventListener('click', () => {
       activeProduct = product;
@@ -90,13 +105,16 @@ if (lightsGrid && lightDialog) {
       photoTrack.replaceChildren(...product.images.map((src, index) => {
         const figure = document.createElement('figure');
         figure.className = 'light-photo';
+        const imageFrame = document.createElement('div');
+        imageFrame.className = 'light-photo-image';
         const image = document.createElement('img');
         image.src = src;
-        image.alt = `Ảnh demo bể cá ${index + 1} — ${product.name}`;
+        image.alt = `Đèn ${product.name} - Ảnh ${index + 1}`;
         image.decoding = 'async';
         const caption = document.createElement('figcaption');
-        caption.textContent = `${product.name} · Ảnh minh họa ${index + 1}`;
-        figure.append(image, caption);
+        caption.textContent = `${product.name} · Ảnh ${index + 1}`;
+        imageFrame.append(image);
+        figure.append(imageFrame, caption);
         return figure;
       }));
       lightDialog.showModal();
